@@ -16,7 +16,16 @@ gulp.task 'coffee', ->
     .pipe sourcemaps.write()
     .pipe gulp.dest BUILD_DIR
 
-gulp.task 'default', ['coffee']
+gulp.task 'copy', ['copy:config']
+
+gulp.task 'copy:config', ->
+  gulp.src './src/config.json'
+    .pipe gulp.dest BUILD_DIR
+
+gulp.task 'default', [
+  'coffee'
+  'copy'
+]
 
 gulp.task 'clean', ->
   del BUILD_DIR

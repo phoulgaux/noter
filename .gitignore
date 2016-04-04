@@ -1,11 +1,11 @@
 # Project-specific
 dist/
+src/config.json
 
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
 # Logs
 logs
-*.log
 npm-debug.log*
 
 # Runtime data
