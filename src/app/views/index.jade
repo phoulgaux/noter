@@ -1,0 +1,29 @@
+extends ./layout.jade
+
+block title
+    title Noter
+
+block content
+    div#page.container-fluid
+        div.navbar.navbar-default.col-xs-12
+            div.container-fluid
+                div.navbar-header
+                    a.navbar-brand(href="/") Noter
+                ul.nav.navbar-nav.navbar-right
+                    li
+                        a(href="#", id="add-button", onclick="showAddNoteWindow()") Add
+        div#add-note.container-fluid
+            div.row.text-center
+                h3 Add a note
+            div.row.text-center
+                input#text-title.form-control(type="text", placeholder="Title")
+            div.row.text-center
+                textarea#text-content.form-control(placeholder="Content")
+            div.row.text-center
+                button#form-add-button.btn.btn-primary(onclick="addNote()") Add
+                button#form-cancel-button.btn(onclick="closeAddNoteWindow()") Cancel
+        div.row
+            div.col-sm-12
+                h2.text-center Your notes
+        div#noteList
+    script(src="js/main.js")

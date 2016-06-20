@@ -10,6 +10,7 @@ fs = require 'fs'
 mongoose = require 'mongoose'
 
 api = require './app/api'
+page = require './app/page'
 
 ##############################################################################
 # Application
@@ -22,6 +23,7 @@ config = JSON.parse fs.readFileSync('./dist/config.json')
 # prepare Express app
 app = express()
 app.use bodyParser.json()
+app.use bodyParser.urlencoded()
 
 # logger
 app.use morgan 'dev'
@@ -40,7 +42,7 @@ noteRouter.get '/', (req, res) ->
     'application/json': ->
       res.json {msg: 'Index hit'}
     'text/html': ->
-      res.send '<h1>Html response</h1>'
+      page.getNoteView req, res
     'default': ->
       res.status(406).send '<h1>406 Not acceptable</h1>'
   }
@@ -65,8 +67,22 @@ noteRouter.post '/note', (req, res) ->
     'default': ->
       res.status(406).send '<h1>406 Not acceptable</h1>'
   }
+noteRouter.delete '/note', (req, res) ->
+  res.format {
+    'application/json': ->
+      api.deleteNote req, res
+    'default': ->
+      res.status(406).send '<h1>406 Not acceptable</h1>'
+  }
 
 app.use '/', noteRouter
+
+##############################################################################
+# Static files
+##############################################################################
+
+app.use '/css', express.static './dist/css'
+app.use '/js', express.static './dist/front_js'
 
 ##############################################################################
 # Main loop
